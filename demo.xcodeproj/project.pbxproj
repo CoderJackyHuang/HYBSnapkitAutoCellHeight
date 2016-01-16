@@ -11,6 +11,9 @@
 		691A4F831C4A0B04005D795A /* head.png in Resources */ = {isa = PBXBuildFile; fileRef = 691A4F821C4A0B04005D795A /* head.png */; };
 		691A4F841C4A0B04005D795A /* head.png in Resources */ = {isa = PBXBuildFile; fileRef = 691A4F821C4A0B04005D795A /* head.png */; };
 		691A4F851C4A0B04005D795A /* head.png in Resources */ = {isa = PBXBuildFile; fileRef = 691A4F821C4A0B04005D795A /* head.png */; };
+		691A4F871C4A3776005D795A /* UITableView+AutoCellHeight.swift in Sources */ = {isa = PBXBuildFile; fileRef = 691A4F861C4A3776005D795A /* UITableView+AutoCellHeight.swift */; };
+		691A4F881C4A3776005D795A /* UITableView+AutoCellHeight.swift in Sources */ = {isa = PBXBuildFile; fileRef = 691A4F861C4A3776005D795A /* UITableView+AutoCellHeight.swift */; };
+		691A4F891C4A3776005D795A /* UITableView+AutoCellHeight.swift in Sources */ = {isa = PBXBuildFile; fileRef = 691A4F861C4A3776005D795A /* UITableView+AutoCellHeight.swift */; };
 		69384BE01C49391500B61526 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69384BDF1C49391500B61526 /* AppDelegate.swift */; };
 		69384BE21C49391500B61526 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69384BE11C49391500B61526 /* ViewController.swift */; };
 		69384BE51C49391500B61526 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 69384BE31C49391500B61526 /* Main.storyboard */; };
@@ -18,9 +21,6 @@
 		69384BEA1C49391500B61526 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 69384BE81C49391500B61526 /* LaunchScreen.storyboard */; };
 		69384BF51C49391600B61526 /* demoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69384BF41C49391600B61526 /* demoTests.swift */; };
 		69384C001C49391600B61526 /* demoUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69384BFF1C49391600B61526 /* demoUITests.swift */; };
-		69384C101C49508E00B61526 /* UITableView+AutoCellHeight.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69384C0F1C49508E00B61526 /* UITableView+AutoCellHeight.swift */; };
-		69384C111C49508E00B61526 /* UITableView+AutoCellHeight.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69384C0F1C49508E00B61526 /* UITableView+AutoCellHeight.swift */; };
-		69384C121C49508E00B61526 /* UITableView+AutoCellHeight.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69384C0F1C49508E00B61526 /* UITableView+AutoCellHeight.swift */; };
 		69384C181C49597400B61526 /* TestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69384C171C49597400B61526 /* TestModel.swift */; };
 		69384C191C49597400B61526 /* TestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69384C171C49597400B61526 /* TestModel.swift */; };
 		69384C1A1C49597400B61526 /* TestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69384C171C49597400B61526 /* TestModel.swift */; };
@@ -50,6 +50,7 @@
 		1EF98A70A1DF5AF0329F781B /* Pods-demo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-demo.release.xcconfig"; path = "Pods/Target Support Files/Pods-demo/Pods-demo.release.xcconfig"; sourceTree = "<group>"; };
 		3ED42B8817F6F49BE64BFE5A /* Pods-demo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-demo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-demo/Pods-demo.debug.xcconfig"; sourceTree = "<group>"; };
 		691A4F821C4A0B04005D795A /* head.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = head.png; sourceTree = "<group>"; };
+		691A4F861C4A3776005D795A /* UITableView+AutoCellHeight.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "UITableView+AutoCellHeight.swift"; path = "HYBSnapkitAutoCellHeight/UITableView+AutoCellHeight.swift"; sourceTree = "<group>"; };
 		69384BDC1C49391500B61526 /* demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = demo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		69384BDF1C49391500B61526 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		69384BE11C49391500B61526 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -63,7 +64,6 @@
 		69384BFB1C49391600B61526 /* demoUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = demoUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		69384BFF1C49391600B61526 /* demoUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = demoUITests.swift; sourceTree = "<group>"; };
 		69384C011C49391600B61526 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		69384C0F1C49508E00B61526 /* UITableView+AutoCellHeight.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UITableView+AutoCellHeight.swift"; sourceTree = "<group>"; };
 		69384C131C49519F00B61526 /* SnapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SnapKit.framework; path = "Pods/../build/Debug-iphoneos/SnapKit.framework"; sourceTree = "<group>"; };
 		69384C171C49597400B61526 /* TestModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestModel.swift; sourceTree = "<group>"; };
 		69384C1B1C49598000B61526 /* TestCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestCell.swift; sourceTree = "<group>"; };
@@ -174,7 +174,7 @@
 		69384C0E1C49503700B61526 /* HYBSnapkitAutoCellHeight */ = {
 			isa = PBXGroup;
 			children = (
-				69384C0F1C49508E00B61526 /* UITableView+AutoCellHeight.swift */,
+				691A4F861C4A3776005D795A /* UITableView+AutoCellHeight.swift */,
 			);
 			name = HYBSnapkitAutoCellHeight;
 			path = ../../HYBSnapkitAutoCellHeight;
@@ -366,8 +366,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				69384BE21C49391500B61526 /* ViewController.swift in Sources */,
-				69384C101C49508E00B61526 /* UITableView+AutoCellHeight.swift in Sources */,
 				69384C1C1C49598000B61526 /* TestCell.swift in Sources */,
+				691A4F871C4A3776005D795A /* UITableView+AutoCellHeight.swift in Sources */,
 				69384BE01C49391500B61526 /* AppDelegate.swift in Sources */,
 				69384C181C49597400B61526 /* TestModel.swift in Sources */,
 			);
@@ -379,7 +379,7 @@
 			files = (
 				69384C191C49597400B61526 /* TestModel.swift in Sources */,
 				69384C1D1C49598000B61526 /* TestCell.swift in Sources */,
-				69384C111C49508E00B61526 /* UITableView+AutoCellHeight.swift in Sources */,
+				691A4F881C4A3776005D795A /* UITableView+AutoCellHeight.swift in Sources */,
 				69384BF51C49391600B61526 /* demoTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -390,7 +390,7 @@
 			files = (
 				69384C1A1C49597400B61526 /* TestModel.swift in Sources */,
 				69384C1E1C49598000B61526 /* TestCell.swift in Sources */,
-				69384C121C49508E00B61526 /* UITableView+AutoCellHeight.swift in Sources */,
+				691A4F891C4A3776005D795A /* UITableView+AutoCellHeight.swift in Sources */,
 				69384C001C49391600B61526 /* demoUITests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
