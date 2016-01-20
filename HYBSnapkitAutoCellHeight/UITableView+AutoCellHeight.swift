@@ -68,11 +68,41 @@ extension UITableViewCell {
       block(cell: cell);
     }
     
-    return cell.hyb_calculateCellHeight(forIndexPath: indexPath)
+    return cell.hyb_calculateCellHeight(forIndexPath: indexPath, cache: nil)
+  }
+  
+  public class func hyb_cellHeight(forIndexPath indexPath: NSIndexPath,
+    config: ((cell: UITableViewCell) -> Void)?,
+    cache: ((Void) -> (key: String, stateKey: String, cacheForTableView: UITableView))?) -> CGFloat {
+    let cell = self.init(style: .Default, reuseIdentifier: nil)
+    
+    if let block = config {
+      block(cell: cell);
+    }
+      
+      if let cacheBlock = cache {
+        let keyGroup = cacheBlock()
+        let key = keyGroup.key
+        let stateKey = keyGroup.stateKey
+        let tableView = keyGroup.cacheForTableView
+        
+        if var cacheDict = tableView.hyb_cacheHeightDictionary {
+          // 状态高度缓存
+          var stateDict = cacheDict[key]
+            if let height = stateDict?[stateKey] {
+              if height != 0 {
+                return height
+              }
+            }
+        }
+      }
+    
+    return cell.hyb_calculateCellHeight(forIndexPath: indexPath, cache: cache)
   }
   
   // MARK: Private
-  private func hyb_calculateCellHeight(forIndexPath indexPath: NSIndexPath) -> CGFloat {
+  private func hyb_calculateCellHeight(forIndexPath indexPath: NSIndexPath,
+    cache: ((Void) -> (key: String, stateKey: String, cacheForTableView: UITableView))?) -> CGFloat {
     assert(self.hyb_lastViewInCell != nil, "hyb_lastViewInCell property can't be nil")
     
     layoutIfNeeded()
@@ -80,6 +110,25 @@ extension UITableViewCell {
     var height = self.hyb_lastViewInCell!.frame.origin.y + self.hyb_lastViewInCell!.frame.size.height;
     height += self.hyb_bottomOffsetToCell ?? 0.0
     
+      if let cacheBlock = cache {
+        let keyGroup = cacheBlock()
+        let key = keyGroup.key
+        let stateKey = keyGroup.stateKey
+        let tableView = keyGroup.cacheForTableView
+        
+        if var cacheDict = tableView.hyb_cacheHeightDictionary {
+          // 状态高度缓存
+          var stateDict = cacheDict[key]
+          if stateDict != nil {
+            stateDict?.updateValue(height, forKey: stateKey);
+          } else {
+            cacheDict[key] = [stateKey: height]
+          }
+          
+          tableView.hyb_cacheHeightDictionary = cacheDict
+        }
+      }
+ 
     return height
   }
 }

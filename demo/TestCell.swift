@@ -106,6 +106,8 @@ class TestCell: UITableViewCell {
   
 // MARK: Public
 func config(testModel model: TestModel) {
+
+  
   titleLabel.text = model.title
   descLabel.text = model.desc
   blogSummaryLabel.text = model.blog

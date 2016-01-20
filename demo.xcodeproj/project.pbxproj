@@ -14,6 +14,9 @@
 		691A4F871C4A3776005D795A /* UITableView+AutoCellHeight.swift in Sources */ = {isa = PBXBuildFile; fileRef = 691A4F861C4A3776005D795A /* UITableView+AutoCellHeight.swift */; };
 		691A4F881C4A3776005D795A /* UITableView+AutoCellHeight.swift in Sources */ = {isa = PBXBuildFile; fileRef = 691A4F861C4A3776005D795A /* UITableView+AutoCellHeight.swift */; };
 		691A4F891C4A3776005D795A /* UITableView+AutoCellHeight.swift in Sources */ = {isa = PBXBuildFile; fileRef = 691A4F861C4A3776005D795A /* UITableView+AutoCellHeight.swift */; };
+		6934F5031C4E9061006713C3 /* UITableView+CacheCellHeight.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6934F5021C4E9060006713C3 /* UITableView+CacheCellHeight.swift */; };
+		6934F5041C4E9061006713C3 /* UITableView+CacheCellHeight.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6934F5021C4E9060006713C3 /* UITableView+CacheCellHeight.swift */; };
+		6934F5051C4E9061006713C3 /* UITableView+CacheCellHeight.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6934F5021C4E9060006713C3 /* UITableView+CacheCellHeight.swift */; };
 		69384BE01C49391500B61526 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69384BDF1C49391500B61526 /* AppDelegate.swift */; };
 		69384BE21C49391500B61526 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69384BE11C49391500B61526 /* ViewController.swift */; };
 		69384BE51C49391500B61526 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 69384BE31C49391500B61526 /* Main.storyboard */; };
@@ -51,6 +54,7 @@
 		3ED42B8817F6F49BE64BFE5A /* Pods-demo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-demo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-demo/Pods-demo.debug.xcconfig"; sourceTree = "<group>"; };
 		691A4F821C4A0B04005D795A /* head.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = head.png; sourceTree = "<group>"; };
 		691A4F861C4A3776005D795A /* UITableView+AutoCellHeight.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "UITableView+AutoCellHeight.swift"; path = "HYBSnapkitAutoCellHeight/UITableView+AutoCellHeight.swift"; sourceTree = "<group>"; };
+		6934F5021C4E9060006713C3 /* UITableView+CacheCellHeight.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "UITableView+CacheCellHeight.swift"; path = "HYBSnapkitAutoCellHeight/UITableView+CacheCellHeight.swift"; sourceTree = "<group>"; };
 		69384BDC1C49391500B61526 /* demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = demo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		69384BDF1C49391500B61526 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		69384BE11C49391500B61526 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -175,6 +179,7 @@
 			isa = PBXGroup;
 			children = (
 				691A4F861C4A3776005D795A /* UITableView+AutoCellHeight.swift */,
+				6934F5021C4E9060006713C3 /* UITableView+CacheCellHeight.swift */,
 			);
 			name = HYBSnapkitAutoCellHeight;
 			path = ../../HYBSnapkitAutoCellHeight;
@@ -366,6 +371,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				69384BE21C49391500B61526 /* ViewController.swift in Sources */,
+				6934F5031C4E9061006713C3 /* UITableView+CacheCellHeight.swift in Sources */,
 				69384C1C1C49598000B61526 /* TestCell.swift in Sources */,
 				691A4F871C4A3776005D795A /* UITableView+AutoCellHeight.swift in Sources */,
 				69384BE01C49391500B61526 /* AppDelegate.swift in Sources */,
@@ -377,6 +383,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6934F5041C4E9061006713C3 /* UITableView+CacheCellHeight.swift in Sources */,
 				69384C191C49597400B61526 /* TestModel.swift in Sources */,
 				69384C1D1C49598000B61526 /* TestCell.swift in Sources */,
 				691A4F881C4A3776005D795A /* UITableView+AutoCellHeight.swift in Sources */,
@@ -388,6 +395,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6934F5051C4E9061006713C3 /* UITableView+CacheCellHeight.swift in Sources */,
 				69384C1A1C49597400B61526 /* TestModel.swift in Sources */,
 				69384C1E1C49598000B61526 /* TestCell.swift in Sources */,
 				691A4F891C4A3776005D795A /* UITableView+AutoCellHeight.swift in Sources */,

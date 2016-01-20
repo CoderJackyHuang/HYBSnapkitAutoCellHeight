@@ -12,12 +12,13 @@ let cellIdentifier = "TestCellIdentifier"
 
 class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
   var dataSource = [TestModel]()
-
+  
   override func viewDidLoad() {
     super.viewDidLoad()
-
+    
     for var i = 0; i < 30; ++i {
       let model = TestModel()
+      model.modelId = i + 1;
       model.title = "基于SnapKit写的自动计算行高的扩展，欢迎大家使用"
       model.desc = "基于SnapKit写的自动计算行高的扩展，欢迎大家使用。不仅可以根据约束自动调整高度的高度，还可以解决重用问题。使用自动布局是可以自动适配了，但是如果没有很好地解决重用问题，那么每次因为没有更新约束，可能会因为重用而导致错乱。这个demo不只是测试这个扩展类，更给大家带来一种解决重用问题的方案"
       
@@ -51,27 +52,66 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
   deinit {
     print("deinit")
   }
-
+  
   // MARK: UITableViewDelegate
   func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
     let model = self.dataSource[indexPath.row]
     
+    var stateKey = "";
+    if model.isExpand1 && model.isExpand2 {
+      stateKey = "expand1&expand2"
+    } else if !model.isExpand1 && !model.isExpand2 {
+      stateKey = "unexpand1&unexpand2"
+    } else if model.isExpand1 {
+      stateKey = "expand1&unexpand2"
+    } else {
+      stateKey = "unexpand1&expand2"
+    }
+    
+//    // 获取缓存
+//    if let dict = tableView.hyb_cacheHeightDictionary?[String(model.modelId)] {
+//      if let cacheHeight = dict[stateKey] {
+//        print("get hegiht from cache")
+//        return cacheHeight
+//      }
+//    }
+//    
+//    let height = TestCell.hyb_cellHeight(forIndexPath: indexPath, config: { (cell) -> Void in
+//      let itemCell = cell as? TestCell
+//      itemCell?.config(testModel: model)
+//    })
+//    
+//    if var cacheDict = tableView.hyb_cacheHeightDictionary {
+//      // 状态高度缓存
+//      var stateDict = cacheDict[String(model.modelId)]
+//      if stateDict != nil {
+//        stateDict?.updateValue(height, forKey: stateKey);
+//      } else {
+//        cacheDict[String(model.modelId)] = [stateKey: height]
+//        print(cacheDict)
+//      }
+//      tableView.hyb_cacheHeightDictionary = cacheDict
+//    }
+    
+//    return height
     return TestCell.hyb_cellHeight(forIndexPath: indexPath, config: { (cell) -> Void in
       let itemCell = cell as? TestCell
-      itemCell?.config(testModel: model)
+            itemCell?.config(testModel: model)
+      }, cache: { () -> (key: String, stateKey: String, cacheForTableView: UITableView) in
+        return (String(model.modelId), stateKey, tableView)
     })
   }
   
   // MARK: UITableViewDataSource
   func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-     return self.dataSource.count
+    return self.dataSource.count
   }
   
   func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
     var cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier) as? TestCell
     
     if cell == nil {
-     cell = TestCell(style: .Default, reuseIdentifier: cellIdentifier)
+      cell = TestCell(style: .Default, reuseIdentifier: cellIdentifier)
       cell?.selectionStyle = .None
     }
     
@@ -87,6 +127,8 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
       
       tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
     }
+    
+    print("配置数据")
     
     return cell!
   }

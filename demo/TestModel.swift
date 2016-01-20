@@ -9,6 +9,7 @@
 import Foundation
 
 class TestModel {
+  var modelId = 0
   var title = ""
   var desc = ""
   var blog = ""
