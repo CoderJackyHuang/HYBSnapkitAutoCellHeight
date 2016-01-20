@@ -12,11 +12,28 @@ let cellIdentifier = "TestCellIdentifier"
 
 class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
   var dataSource = [TestModel]()
+  var tableView = UITableView()
   
   override func viewDidLoad() {
     super.viewDidLoad()
     
-    for var i = 0; i < 2000; ++i {
+    tableView.dataSource = self
+    tableView.delegate = self
+    self.view.addSubview(tableView)
+    tableView.snp_makeConstraints { [unowned self](make) -> Void in
+      make.edges.equalTo(self.view)
+    }
+    
+    tableView.separatorStyle = .None
+    self.addDatas()
+  }
+  
+  deinit {
+    print("deinit")
+  }
+  
+  func addDatas() {
+    for var i = 0; i < 20; ++i {
       let model = TestModel()
       model.modelId = i + 1;
       model.title = "基于SnapKit写的自动计算行高的扩展，欢迎大家使用"
@@ -38,19 +55,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
       }
     }
     
-    let tableView = UITableView()
-    tableView.dataSource = self
-    tableView.delegate = self
-    self.view.addSubview(tableView)
-    tableView.snp_makeConstraints { [unowned self](make) -> Void in
-      make.edges.equalTo(self.view)
-    }
     tableView.reloadData()
-    tableView.separatorStyle = .None
-  }
-  
-  deinit {
-    print("deinit")
   }
   
 // MARK: UITableViewDelegate
@@ -100,6 +105,10 @@ func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSInde
       }
       
       tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
+    }
+    
+    if indexPath.row >= self.dataSource.count - 1 {
+      self.addDatas()
     }
     
     return cell!
