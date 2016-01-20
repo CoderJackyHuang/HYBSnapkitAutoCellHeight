@@ -53,54 +53,28 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     print("deinit")
   }
   
-  // MARK: UITableViewDelegate
-  func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-    let model = self.dataSource[indexPath.row]
-    
-    var stateKey = "";
-    if model.isExpand1 && model.isExpand2 {
-      stateKey = "expand1&expand2"
-    } else if !model.isExpand1 && !model.isExpand2 {
-      stateKey = "unexpand1&unexpand2"
-    } else if model.isExpand1 {
-      stateKey = "expand1&unexpand2"
-    } else {
-      stateKey = "unexpand1&expand2"
-    }
-    
-//    // 获取缓存
-//    if let dict = tableView.hyb_cacheHeightDictionary?[String(model.modelId)] {
-//      if let cacheHeight = dict[stateKey] {
-//        print("get hegiht from cache")
-//        return cacheHeight
-//      }
-//    }
-//    
-//    let height = TestCell.hyb_cellHeight(forIndexPath: indexPath, config: { (cell) -> Void in
-//      let itemCell = cell as? TestCell
-//      itemCell?.config(testModel: model)
-//    })
-//    
-//    if var cacheDict = tableView.hyb_cacheHeightDictionary {
-//      // 状态高度缓存
-//      var stateDict = cacheDict[String(model.modelId)]
-//      if stateDict != nil {
-//        stateDict?.updateValue(height, forKey: stateKey);
-//      } else {
-//        cacheDict[String(model.modelId)] = [stateKey: height]
-//        print(cacheDict)
-//      }
-//      tableView.hyb_cacheHeightDictionary = cacheDict
-//    }
-    
-//    return height
-    return TestCell.hyb_cellHeight(forIndexPath: indexPath, config: { (cell) -> Void in
-      let itemCell = cell as? TestCell
-            itemCell?.config(testModel: model)
-      }, cache: { () -> (key: String, stateKey: String, cacheForTableView: UITableView) in
-        return (String(model.modelId), stateKey, tableView)
-    })
+// MARK: UITableViewDelegate
+func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+  let model = self.dataSource[indexPath.row]
+  
+  var stateKey = "";
+  if model.isExpand1 && model.isExpand2 {
+    stateKey = "expand1&expand2"
+  } else if !model.isExpand1 && !model.isExpand2 {
+    stateKey = "unexpand1&unexpand2"
+  } else if model.isExpand1 {
+    stateKey = "expand1&unexpand2"
+  } else {
+    stateKey = "unexpand1&expand2"
   }
+  
+  return TestCell.hyb_cellHeight(forIndexPath: indexPath, config: { (cell) -> Void in
+    let itemCell = cell as? TestCell
+          itemCell?.config(testModel: model)
+    }, cache: { () -> (key: String, stateKey: String, cacheForTableView: UITableView) in
+      return (String(model.modelId), stateKey, tableView)
+  })
+}
   
   // MARK: UITableViewDataSource
   func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
