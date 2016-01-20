@@ -16,7 +16,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
   override func viewDidLoad() {
     super.viewDidLoad()
     
-    for var i = 0; i < 30; ++i {
+    for var i = 0; i < 2000; ++i {
       let model = TestModel()
       model.modelId = i + 1;
       model.title = "基于SnapKit写的自动计算行高的扩展，欢迎大家使用"
@@ -101,8 +101,6 @@ func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSInde
       
       tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
     }
-    
-    print("配置数据")
     
     return cell!
   }

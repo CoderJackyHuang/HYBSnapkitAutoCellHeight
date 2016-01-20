@@ -106,7 +106,7 @@ class TestCell: UITableViewCell {
   
 // MARK: Public
 func config(testModel model: TestModel) {
-
+    print("配置数据")
   
   titleLabel.text = model.title
   descLabel.text = model.desc

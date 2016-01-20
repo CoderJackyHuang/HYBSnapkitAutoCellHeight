@@ -74,7 +74,6 @@ extension UITableViewCell {
   public class func hyb_cellHeight(forIndexPath indexPath: NSIndexPath,
     config: ((cell: UITableViewCell) -> Void)?,
     cache: ((Void) -> (key: String, stateKey: String, cacheForTableView: UITableView))?) -> CGFloat {
-      let cell = self.init(style: .Default, reuseIdentifier: nil)
       
       if let cacheBlock = cache {
         let keyGroup = cacheBlock()
@@ -82,17 +81,19 @@ extension UITableViewCell {
         let stateKey = keyGroup.stateKey
         let tableView = keyGroup.cacheForTableView
         
-        if var cacheDict = tableView.hyb_cacheHeightDictionary {
+        if let cacheDict = tableView.hyb_cacheHeightDictionary {
           // 状态高度缓存
-          var stateDict = cacheDict[key]
-          if let height = stateDict?[stateKey] {
-            if height != 0 {
-              return height
+          if let stateDict = cacheDict[key] as? NSMutableDictionary {
+            if let height = stateDict[stateKey] as? NSNumber {
+              if height.intValue != 0 {
+                return CGFloat(height.floatValue)
+              }
             }
           }
         }
       }
       
+      let cell = self.init(style: .Default, reuseIdentifier: nil)
       if let block = config {
         block(cell: cell);
       }
@@ -116,16 +117,15 @@ extension UITableViewCell {
         let stateKey = keyGroup.stateKey
         let tableView = keyGroup.cacheForTableView
         
-        if var cacheDict = tableView.hyb_cacheHeightDictionary {
+        if let cacheDict = tableView.hyb_cacheHeightDictionary {
           // 状态高度缓存
-          var stateDict = cacheDict[key]
-          if stateDict != nil {
-            stateDict?.updateValue(height, forKey: stateKey);
-          } else {
-            cacheDict[key] = [stateKey: height]
-          }
+          let stateDict = cacheDict[key] as? NSMutableDictionary
           
-          tableView.hyb_cacheHeightDictionary = cacheDict
+          if stateDict != nil {
+            stateDict?[stateKey] = NSNumber(float: Float(height))
+          } else {
+            cacheDict[key] = NSMutableDictionary(object: NSNumber(float: Float(height)), forKey: stateKey)
+          }
         }
       }
       
