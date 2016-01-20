@@ -37,7 +37,7 @@ extension UITableViewCell {
         .OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     }
   }
-
+  
   /// 可不指定，若不指定则使用默认值0
   public var hyb_bottomOffsetToCell: CGFloat? {
     get {
@@ -74,11 +74,7 @@ extension UITableViewCell {
   public class func hyb_cellHeight(forIndexPath indexPath: NSIndexPath,
     config: ((cell: UITableViewCell) -> Void)?,
     cache: ((Void) -> (key: String, stateKey: String, cacheForTableView: UITableView))?) -> CGFloat {
-    let cell = self.init(style: .Default, reuseIdentifier: nil)
-    
-    if let block = config {
-      block(cell: cell);
-    }
+      let cell = self.init(style: .Default, reuseIdentifier: nil)
       
       if let cacheBlock = cache {
         let keyGroup = cacheBlock()
@@ -89,27 +85,31 @@ extension UITableViewCell {
         if var cacheDict = tableView.hyb_cacheHeightDictionary {
           // 状态高度缓存
           var stateDict = cacheDict[key]
-            if let height = stateDict?[stateKey] {
-              if height != 0 {
-                return height
-              }
+          if let height = stateDict?[stateKey] {
+            if height != 0 {
+              return height
             }
+          }
         }
       }
-    
-    return cell.hyb_calculateCellHeight(forIndexPath: indexPath, cache: cache)
+      
+      if let block = config {
+        block(cell: cell);
+      }
+      
+      return cell.hyb_calculateCellHeight(forIndexPath: indexPath, cache: cache)
   }
   
   // MARK: Private
   private func hyb_calculateCellHeight(forIndexPath indexPath: NSIndexPath,
     cache: ((Void) -> (key: String, stateKey: String, cacheForTableView: UITableView))?) -> CGFloat {
-    assert(self.hyb_lastViewInCell != nil, "hyb_lastViewInCell property can't be nil")
-    
-    layoutIfNeeded()
-    
-    var height = self.hyb_lastViewInCell!.frame.origin.y + self.hyb_lastViewInCell!.frame.size.height;
-    height += self.hyb_bottomOffsetToCell ?? 0.0
-    
+      assert(self.hyb_lastViewInCell != nil, "hyb_lastViewInCell property can't be nil")
+      
+      layoutIfNeeded()
+      
+      var height = self.hyb_lastViewInCell!.frame.origin.y + self.hyb_lastViewInCell!.frame.size.height;
+      height += self.hyb_bottomOffsetToCell ?? 0.0
+      
       if let cacheBlock = cache {
         let keyGroup = cacheBlock()
         let key = keyGroup.key
@@ -128,8 +128,8 @@ extension UITableViewCell {
           tableView.hyb_cacheHeightDictionary = cacheDict
         }
       }
- 
-    return height
+      
+      return height
   }
 }
 

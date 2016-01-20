@@ -11,6 +11,10 @@
 
 * 新增高度缓存，提高滚动的流畅性
 
+#version 1.1
+
+* fix bugs
+
 #如何使用？
 
 请阅读博文：[开源HYBSnapkitAutoCellHeight基于SnapKit自动计算行高的扩展](http://www.henishuo.com/snapkit-auto-cell-height/)
