@@ -7,13 +7,18 @@
 
 ![image](http://www.henishuo.com/wp-content/uploads/2016/01/snapkitcellheight.gif)
 
-#version 1.1
+#version 1.0.0
 
 * 新增高度缓存，提高滚动的流畅性
 
-#version 1.1
+#version 1.1.0
 
 * fix bugs
+
+#version 1.1.1
+
+* 增加对某种状态更新缓存的功能，主要是对于社交对于某一种状态，需要实时更新高度
+
 
 #如何使用？
 

@@ -73,12 +73,21 @@ func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSInde
     stateKey = "unexpand1&expand2"
   }
   
+  
+  // 当指定为False时，与下面的写法一样
   return TestCell.hyb_cellHeight(forIndexPath: indexPath, config: { (cell) -> Void in
     let itemCell = cell as? TestCell
-          itemCell?.config(testModel: model)
-    }, cache: { () -> (key: String, stateKey: String, cacheForTableView: UITableView) in
-      return (String(model.modelId), stateKey, tableView)
+    itemCell?.config(testModel: model)
+    }, updateCacheIfNeeded: { () -> (key: String, stateKey: String, shouldUpdate: Bool, cacheForTableView: UITableView) in
+      return (String(model.modelId), stateKey, false, tableView)
   })
+  
+//  return TestCell.hyb_cellHeight(forIndexPath: indexPath, config: { (cell) -> Void in
+//    let itemCell = cell as? TestCell
+//          itemCell?.config(testModel: model)
+//    }, cache: { () -> (key: String, stateKey: String, cacheForTableView: UITableView) in
+//      return (String(model.modelId), stateKey, tableView)
+//  })
 }
   
   // MARK: UITableViewDataSource
