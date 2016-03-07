@@ -54,33 +54,7 @@ extension UITableViewCell {
   }
   
   /**
-   带缓存功能、自动计算行高（当计算出来后的高度不会再变化时，使用此API即可）
-   
-   - parameter tableView:					给哪个tableview缓存
-   - parameter config:						在回调中配置数据
-   - parameter cache:							指定缓存key/stateKey/tableview
-   - parameter stateKey:					stateKey表示状态key
-   
-   - returns: 行高
-   */
-  public class func hyb_cellHeight(forTableView tableView: UITableView,
-    config: ((cell: UITableViewCell) -> Void)?,
-    cache: ((Void) -> (key: String, stateKey: String))?) -> CGFloat {
-      if cache != nil {
-        return self.hyb_cellHeight(forTableView: tableView,
-          config: config,
-          updateCacheIfNeeded: {
-            () -> (key: String, stateKey: String, shouldUpdate: Bool) in
-            let cacheGroup = cache!()
-            return (cacheGroup.key, cacheGroup.stateKey, false)
-        })
-      }
-      
-      return self.hyb_cellHeight(forTableView: tableView, config: config, updateCacheIfNeeded: nil)
-  }
-  
-  /**
-   带缓存功能、自动计算行高（当高度会动态增加或者减小时，调用此API可更新缓存）
+   带缓存功能、自动计算行高
    
    - parameter tableView:					给哪个tableview缓存
    - parameter config:						在回调中配置数据
