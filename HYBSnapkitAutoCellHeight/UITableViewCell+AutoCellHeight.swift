@@ -54,68 +54,50 @@ extension UITableViewCell {
   }
   
   /**
-   唯一的类方法，用于计算行高
+   带缓存功能、自动计算行高（当计算出来后的高度不会再变化时，使用此API即可）
    
-   - parameter indexPath:	index path
-   - parameter config:		在config中调用配置数据方法等
-   
-   - returns: 所计算得到的行高
-   */
-  public class func hyb_cellHeight(forIndexPath indexPath: NSIndexPath, config: ((cell: UITableViewCell) -> Void)?) -> CGFloat {
-    let cell = self.init(style: .Default, reuseIdentifier: nil)
-    
-    if let block = config {
-      block(cell: cell);
-    }
-    
-    return cell.hyb_calculateCellHeight(forIndexPath: indexPath, cache: nil)
-  }
-  
-  /**
-   带缓存功能、自动计算行高
-   
-   - parameter indexPath:					index path
+   - parameter tableView:					给哪个tableview缓存
    - parameter config:						在回调中配置数据
    - parameter cache:							指定缓存key/stateKey/tableview
    - parameter stateKey:					stateKey表示状态key
-   - parameter cacheForTableView: 指定给哪个tableview缓存
    
    - returns: 行高
    */
-  public class func hyb_cellHeight(forIndexPath indexPath: NSIndexPath,
+  public class func hyb_cellHeight(forTableView tableView: UITableView,
     config: ((cell: UITableViewCell) -> Void)?,
-    cache: ((Void) -> (key: String, stateKey: String, cacheForTableView: UITableView))?) -> CGFloat {
+    cache: ((Void) -> (key: String, stateKey: String))?) -> CGFloat {
       if cache != nil {
-        return self.hyb_cellHeight(forIndexPath: indexPath, config: config, updateCacheIfNeeded: { () -> (key: String, stateKey: String, shouldUpdate: Bool, cacheForTableView: UITableView) in
-          let cacheGroup = cache!()
-          return (cacheGroup.key, cacheGroup.stateKey, false, cacheGroup.cacheForTableView)
+        return self.hyb_cellHeight(forTableView: tableView,
+          config: config,
+          updateCacheIfNeeded: {
+            () -> (key: String, stateKey: String, shouldUpdate: Bool) in
+            let cacheGroup = cache!()
+            return (cacheGroup.key, cacheGroup.stateKey, false)
         })
       }
       
-      return self.hyb_cellHeight(forIndexPath: indexPath, config: config, updateCacheIfNeeded: nil)
+      return self.hyb_cellHeight(forTableView: tableView, config: config, updateCacheIfNeeded: nil)
   }
   
   /**
-   带缓存功能、自动计算行高
+   带缓存功能、自动计算行高（当高度会动态增加或者减小时，调用此API可更新缓存）
    
-   - parameter indexPath:					index path
+   - parameter tableView:					给哪个tableview缓存
    - parameter config:						在回调中配置数据
    - parameter cache:							指定缓存key/stateKey/tableview
    - parameter stateKey:					stateKey表示状态key
    - parameter shouldUpdate       是否要更新指定stateKey中缓存高度，若为YES,不管有没有缓存 ，都会重新计算
-   - parameter cacheForTableView: 指定给哪个tableview缓存
    
    - returns: 行高
    */
-  public class func hyb_cellHeight(forIndexPath indexPath: NSIndexPath,
+  public class func hyb_cellHeight(forTableView tableView: UITableView,
     config: ((cell: UITableViewCell) -> Void)?,
-    updateCacheIfNeeded cache: ((Void) -> (key: String, stateKey: String, shouldUpdate: Bool, cacheForTableView: UITableView))?) -> CGFloat {
+    updateCacheIfNeeded cache: ((Void) -> (key: String, stateKey: String, shouldUpdate: Bool))?) -> CGFloat {
       
       if let cacheBlock = cache {
         let keyGroup = cacheBlock()
         let key = keyGroup.key
         let stateKey = keyGroup.stateKey
-        let tableView = keyGroup.cacheForTableView
         let shouldUpdate = keyGroup.shouldUpdate;
         
         if shouldUpdate == false {
@@ -132,29 +114,24 @@ extension UITableViewCell {
         }
       }
       
-      let cell = self.init(style: .Default, reuseIdentifier: nil)
-      if let block = config {
-        block(cell: cell);
+      let className = String(UTF8String: class_getName(self));
+      var cell = tableView.hyb_cacheCellDictionary?.objectForKey(className!) as? UITableViewCell;
+      
+      if cell == nil {
+        cell = self.init(style: .Default, reuseIdentifier: nil)
+        tableView.hyb_cacheCellDictionary?.setObject(cell!, forKey: className!);
       }
       
-      return cell.hyb_calculateCellHeight(forIndexPath: indexPath, updateCacheIfNeeded: cache)
-  }
-  
-  // MARK: Private
-  private func hyb_calculateCellHeight(forIndexPath indexPath: NSIndexPath,
-    cache: ((Void) -> (key: String, stateKey: String, cacheForTableView: UITableView))?) -> CGFloat {
-      if cache != nil {
-        return hyb_calculateCellHeight(forIndexPath: indexPath, updateCacheIfNeeded: { () -> (key: String, stateKey: String, shouldUpdate: Bool, cacheForTableView: UITableView) in
-          let cacheGroup = cache!()
-          return (cacheGroup.key, cacheGroup.stateKey, false, cacheGroup.cacheForTableView)
-        })
-      } else {
-        return hyb_calculateCellHeight(forIndexPath: indexPath, updateCacheIfNeeded: nil)
+      if let block = config {
+        block(cell: cell!);
       }
+      
+      return cell!.hyb_calculateCellHeight(forTableView: tableView, updateCacheIfNeeded: cache)
   }
   
-  private func hyb_calculateCellHeight(forIndexPath indexPath: NSIndexPath,
-    updateCacheIfNeeded cache: ((Void) -> (key: String, stateKey: String, shouldUpdate: Bool, cacheForTableView: UITableView))?) -> CGFloat {
+  // Mark - Private
+  private func hyb_calculateCellHeight(forTableView tableView: UITableView,
+    updateCacheIfNeeded cache: ((Void) -> (key: String, stateKey: String, shouldUpdate: Bool))?) -> CGFloat {
       assert(self.hyb_lastViewInCell != nil, "hyb_lastViewInCell property can't be nil")
       
       layoutIfNeeded()
@@ -166,7 +143,6 @@ extension UITableViewCell {
         let keyGroup = cacheBlock()
         let key = keyGroup.key
         let stateKey = keyGroup.stateKey
-        let tableView = keyGroup.cacheForTableView
         
         if let cacheDict = tableView.hyb_cacheHeightDictionary {
           // 状态高度缓存

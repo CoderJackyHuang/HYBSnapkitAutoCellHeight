@@ -58,37 +58,28 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     tableView.reloadData()
   }
   
-// MARK: UITableViewDelegate
-func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-  let model = self.dataSource[indexPath.row]
-  
-  var stateKey = "";
-  if model.isExpand1 && model.isExpand2 {
-    stateKey = "expand1&expand2"
-  } else if !model.isExpand1 && !model.isExpand2 {
-    stateKey = "unexpand1&unexpand2"
-  } else if model.isExpand1 {
-    stateKey = "expand1&unexpand2"
-  } else {
-    stateKey = "unexpand1&expand2"
+  // MARK: UITableViewDelegate
+  func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    let model = self.dataSource[indexPath.row]
+    
+    var stateKey = "";
+    if model.isExpand1 && model.isExpand2 {
+      stateKey = "expand1&expand2"
+    } else if !model.isExpand1 && !model.isExpand2 {
+      stateKey = "unexpand1&unexpand2"
+    } else if model.isExpand1 {
+      stateKey = "expand1&unexpand2"
+    } else {
+      stateKey = "unexpand1&expand2"
+    }
+    
+    return TestCell.hyb_cellHeight(forTableView: tableView, config: { (cell) -> Void in
+      let itemCell = cell as? TestCell
+      itemCell?.config(testModel: model)
+      }, updateCacheIfNeeded: { () -> (key: String, stateKey: String, shouldUpdate: Bool) in
+        return (String(model.modelId), stateKey, false)
+    })
   }
-  
-  
-  // 当指定为False时，与下面的写法一样
-  return TestCell.hyb_cellHeight(forIndexPath: indexPath, config: { (cell) -> Void in
-    let itemCell = cell as? TestCell
-    itemCell?.config(testModel: model)
-    }, updateCacheIfNeeded: { () -> (key: String, stateKey: String, shouldUpdate: Bool, cacheForTableView: UITableView) in
-      return (String(model.modelId), stateKey, false, tableView)
-  })
-  
-//  return TestCell.hyb_cellHeight(forIndexPath: indexPath, config: { (cell) -> Void in
-//    let itemCell = cell as? TestCell
-//          itemCell?.config(testModel: model)
-//    }, cache: { () -> (key: String, stateKey: String, cacheForTableView: UITableView) in
-//      return (String(model.modelId), stateKey, tableView)
-//  })
-}
   
   // MARK: UITableViewDataSource
   func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
